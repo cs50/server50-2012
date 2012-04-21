@@ -8,6 +8,7 @@ Group: System Environment/Base
 Vendor: CS50
 BuildArch: x86_64
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root
+Requires: ack
 Requires: centos-release = 6-2.el6.centos.7
 Requires: bc
 
@@ -15,17 +16,18 @@ Requires: bc
 Requires: binutils
 
 Requires: bind-utils
-
+Requires: clang
 Requires: coreutils 
-
 Requires: cs50-library-c
 Requires: cs50-library-php
 Requires: ctags
 Requires: diffutils
 Requires: dkms
 Requires: emacs
+Requires: epel-release
 Requires: ftp
 Requires: gcc
+Requires: gcc-c++
 Requires: gdb
 Requires: git
 Requires: httpd
@@ -43,6 +45,7 @@ Requires: lynx
 Requires: make
 Requires: man
 Requires: man-pages
+Requires: memcached
 Requires: mercurial
 Requires: mlocate
 Requires: mod_suphp
@@ -55,17 +58,27 @@ Requires: ncftp
 Requires: ncurses
 Requires: ncurses-devel
 
+# https://github.com/joyent/node/wiki/Installing-Node.js-via-package-manager
+Requires: nodejs-stable-release
+Requires: nodejs-compat-symlinks
+Requires: npm
+
 Requires: ntp
 Requires: openssh-clients
 Requires: openssh-server
 Requires: patch
 
+Requires: perl
 Requires: php
-Requires: php-devel
 Requires: php-mysql
 Requires: php-pear
+Requires: php-pdo
+Requires: php-pecl-memcache
+Requires: php-pecl-solr
 Requires: php-pecl-xdebug
 Requires: php-PHPMailer
+Requires: php-phpunit-DbUnit
+Requires: php-phpunit-PHPUnit
 Requires: php-tidy
 Requires: php-xml
 Requires: phpMyAdmin
