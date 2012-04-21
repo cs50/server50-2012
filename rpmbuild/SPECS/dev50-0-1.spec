@@ -3,7 +3,7 @@ Summary: Configures the CS50 dev VM.
 Name: dev50
 Version: 0
 Release: 1 
-#License: CC BY-NC-SA 3.0
+License: CC BY-NC-SA 3.0
 Group: System Environment/Base
 Vendor: CS50
 #URL: https://manual.cs50.net/CS50_Appliance_3
@@ -73,8 +73,10 @@ Requires: php-tidy
 Requires: php-xml
 Requires: phpMyAdmin
 Requires: python
+Requires: redhat-rpm-config
 Requires: render50
 Requires: rpm 
+Requires: rpm-build
 Requires: rsnapshot
 Requires: rsync
 Requires: ruby
