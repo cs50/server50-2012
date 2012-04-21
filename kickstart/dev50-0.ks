@@ -30,7 +30,8 @@ network --bootproto=dhcp --device=eth2 --nodns --noipv6 --onboot=no
 
 repo --cost=1 --name=os --mirrorlist=http://mirrorlist.centos.org/?arch=x86_64&release=6.2&repo=os
 repo --cost=1 --name=updates --mirrorlist=http://mirrorlist.centos.org/?arch=x86_64&release=6.2&repo=updates
-repo --cost=2 --name=cs50 --baseurl=http://mirror.cs50.com/appliance/1/RPMS/
+repo --cost=2 --name=dev50 --baseurl=http://mirror.cs50.com/dev50/0/RPMS/
+repo --cost=3 --name=cs50 --baseurl=http://mirror.cs50.net/appliance/3/RPMS/
 
 # http://fedoraproject.org/wiki/EPEL
 repo --cost=3 --name=epel --baseurl=http://download.fedoraproject.org/pub/epel/6/x86_64/

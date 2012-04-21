@@ -1,4 +1,4 @@
-[cs50]
+[dev50]
 name=CS50 Dev VM 0
 baseurl=http://mirror.cs50.com/dev50/0/RPMS/
 enabled=1

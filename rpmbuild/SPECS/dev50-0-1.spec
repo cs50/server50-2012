@@ -45,7 +45,7 @@ Requires: man
 Requires: man-pages
 Requires: mercurial
 Requires: mlocate
-#Requires: mod_suphp
+Requires: mod_suphp
 Requires: mysql
 Requires: mysql-server
 Requires: nano
@@ -54,6 +54,7 @@ Requires: ncftp
 # -lncurses
 Requires: ncurses
 Requires: ncurses-devel
+
 Requires: ntp
 Requires: openssh-clients
 Requires: openssh-server
@@ -82,11 +83,8 @@ Requires: sed
 Requires: setup
 Requires: shadow-utils
 Requires: sudo
-Requires: system-config-firewall
-Requires: system-config-keyboard
-Requires: system-config-language
+Requires: system-config-firewall-tui
 Requires: system-config-network-tui
-Requires: system-config-services
 Requires: telnet
 Requires: tidy
 Requires: traceroute
@@ -204,13 +202,6 @@ echo "   Reset John Harvard's password to \"crimson\"."
 /bin/chmod 0770 /home/jharvard/logs > /dev/null 2>&1
 /bin/chmod 0660 /home/jharvard/logs/* > /dev/null 2>&1
 
-# synchronize with /etc/skel/{.config,.local}
-/usr/bin/rsync --backup --devices --exclude='*.rpmsave' --links --perms --quiet --recursive --specials --suffix=.rpmsave /etc/skel/{.config,.local} /home/jharvard
-/bin/chown -R jharvard:students /home/jharvard/{.config,.local}
-/usr/bin/rsync --backup --devices --exclude='*.rpmsave' --links --perms --quiet --recursive --specials --suffix=.rpmsave /etc/skel/{.config,.local} /root
-/usr/bin/xfce4-panel & > /dev/null 2>&1
-echo "   Synchronized John Harvard and superuser with /etc/skel/{.config,.local}."
-
 # disable services
 declare -a off=(ip6tables netconsole netfs postfix psacct rdisc saslauthd)
 for service in "${off[@]}"
@@ -269,8 +260,10 @@ do
     echo "   Restarted $service."
 done
 
-# import key (to avoid warnings during future software updates)
-/bin/rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-6
+# import keys (to avoid warnings during future software updates)
+/bin/rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-6 > /dev/null 2>&1
+/bin/rpm --import http://apt.sw.be/RPM-GPG-KEY.dag.txt > /dev/null 2>&1
+/bin/rpm --import http://www.webmin.com/jcameron-key.asc > /dev/null 2>&1
 
 # remove /etc/httpd/conf.d/welcome.conf (because its presence disables Indexes)
 /bin/rm -f /etc/httpd/conf.d/welcome.conf > /dev/null 2>&1
