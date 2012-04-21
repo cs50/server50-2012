@@ -9,7 +9,7 @@ Vendor: CS50
 #URL: https://manual.cs50.net/CS50_Appliance_3
 BuildArch: x86_64
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root
-Requires: centos-release = 6.2
+Requires: centos-release = 6-2.el6.centos.7
 Requires: bc
 
 # gcov, gprof
@@ -33,8 +33,8 @@ Requires: git
 Requires: httpd
 Requires: indent
 Requires: iptables
-Requires: java7
-Requires: java7-devel
+Requires: jdk
+Requires: jre
 Requires: kernel
 Requires: kernel-devel
 Requires: kernel-headers
