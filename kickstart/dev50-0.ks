@@ -41,7 +41,7 @@ repo --cost=99 --name=epel --baseurl=http://download.fedoraproject.org/pub/epel/
 repo --cost=99 --name=nodejs --baseurl=http://nodejs.tchol.org/stable/el6/x86_64/
 
 # http://wiki.centos.org/AdditionalResources/Repositories/RPMForge
-repo --cost=99 --name=rpmforge --mirrorlist=http://apt.sw.be/redhat/el6/en/x86_64/rpmforge
+repo --cost=99 --name=rpmforge --baseurl=http://apt.sw.be/redhat/el6/en/x86_64/rpmforge
 
 # http://www.webmin.com/rpm.html
 repo --cost=99 --name=webmin --mirrorlist=http://download.webmin.com/download/yum/mirrorlist
