@@ -5,4 +5,4 @@ mirrorlist=http://download.webmin.com/download/yum/mirrorlist
 enabled=1
 gpgcheck=1
 gpgkey=http://www.webmin.com/jcameron-key.asc
-priority=2
+priority=3

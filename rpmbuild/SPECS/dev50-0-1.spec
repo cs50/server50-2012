@@ -6,7 +6,6 @@ Release: 1
 License: CC BY-NC-SA 3.0
 Group: System Environment/Base
 Vendor: CS50
-#URL: https://manual.cs50.net/CS50_Appliance_3
 BuildArch: x86_64
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root
 Requires: centos-release = 6-2.el6.centos.7
@@ -26,15 +25,17 @@ Requires: diffutils
 Requires: dkms
 Requires: emacs
 Requires: ftp
-Requires: glibc-debuginfo
 Requires: gcc
 Requires: gdb
 Requires: git
 Requires: httpd
 Requires: indent
 Requires: iptables
+
+# http://www.oracle.com/technetwork/java/javase/downloads/
 Requires: jdk
 Requires: jre
+
 Requires: kernel
 Requires: kernel-devel
 Requires: kernel-headers
@@ -52,12 +53,7 @@ Requires: ncftp
 
 # -lncurses
 Requires: ncurses
-Requires: ncurses-debuginfo
 Requires: ncurses-devel
-
-# -lcrypt
-Requires: nss-softokn-debuginfo
-
 Requires: ntp
 Requires: openssh-clients
 Requires: openssh-server
@@ -89,7 +85,7 @@ Requires: sudo
 Requires: system-config-firewall
 Requires: system-config-keyboard
 Requires: system-config-language
-Requires: system-config-network
+Requires: system-config-network-tui
 Requires: system-config-services
 Requires: telnet
 Requires: tidy
@@ -104,7 +100,6 @@ Requires: words
 Requires: yum-plugin-fastestmirror
 Requires: yum-plugin-priorities
 Requires: yum-plugin-protectbase
-Requires: yum-updatesd
 Requires: yum-utils
 
 Requires(post): coreutils 
