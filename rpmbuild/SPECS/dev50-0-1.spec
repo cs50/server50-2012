@@ -81,7 +81,6 @@ Requires: rsnapshot
 Requires: rsync
 Requires: ruby
 Requires: rubygems
-Requires: samba
 Requires: screen
 Requires: sed
 Requires: setup
@@ -211,10 +210,6 @@ echo "   Reset John Harvard's password to \"crimson\"."
 /bin/chmod 0770 /home/jharvard/logs > /dev/null 2>&1
 /bin/chmod 0660 /home/jharvard/logs/* > /dev/null 2>&1
 
-# /var/lib/samba/private/passdb.tdb
-/bin/echo -e "crimson\ncrimson" | /usr/bin/smbpasswd -a -s jharvard > /dev/null
-echo "   Reset John Harvard's password for Samba to \"crimson\"."
-
 # synchronize with /etc/skel/{.config,.local}
 /usr/bin/rsync --backup --devices --exclude='*.rpmsave' --links --perms --quiet --recursive --specials --suffix=.rpmsave /etc/skel/{.config,.local} /home/jharvard
 /bin/chown -R jharvard:students /home/jharvard/{.config,.local}
@@ -300,8 +295,6 @@ done
 %files
 %defattr(-,root,root,-)
 /tmp/%{name}-%{version}-%{release}
-%defattr(-,root,students,1770)
-/tmp/%{name}-%{version}-%{release}/usr/local/samba/lib/usershares
 
 
 ##########################################################################
