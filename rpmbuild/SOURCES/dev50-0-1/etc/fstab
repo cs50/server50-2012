@@ -1,3 +1,0 @@
-/dev/sda2  swap      swap    defaults                      0 0
-/dev/sda3  /boot     ext4    defaults                      1 2
-/dev/sda4  /         ext4    defaults,usrquota,grpquota    1 1

@@ -48,7 +48,6 @@ Requires: man-pages
 Requires: memcached
 Requires: mercurial
 Requires: mlocate
-Requires: mod_suphp
 Requires: mysql
 Requires: mysql-server
 Requires: nano
