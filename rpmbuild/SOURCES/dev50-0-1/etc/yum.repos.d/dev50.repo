@@ -1,0 +1,8 @@
+[cs50]
+name=CS50 Dev VM 0
+baseurl=http://mirror.cs50.com/dev50/0/RPMS/
+enabled=1
+metadata_expire=300
+gpgcheck=0
+priority=1
+protect=1

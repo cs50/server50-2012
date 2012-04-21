@@ -1,8 +1,8 @@
 ###########################################################################
-### CS50 Server
+### CS50 Dev VM
 ###
 ### David J. Malan
-### malan@cs50.com
+### malan@harvard.edu
 ############################################################################
 
 
@@ -91,13 +91,11 @@ ruby-devel
 valgrind
 vim
 
--abrt
 -at
 -cpuspeed
 -kexec-tools
 -mdadm
 -quota
--policycoreutils
 -rng-tools
 -smartmontools
 
@@ -109,6 +107,9 @@ vim
 ############################################################################
 
 %post
+
+# -abrt and -policycoreutils above doesn't work
+/usr/bin/yum -y remove abrt policycoreutils
 
 # force developer to change password
 /usr/bin/chage -d 0 root

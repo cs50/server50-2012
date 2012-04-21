@@ -1,0 +1,15 @@
+#!/bin/bash
+
+# eth1
+declare eth1=$(/sbin/ifconfig eth1 | /bin/grep 'inet addr:' | /bin/cut -d: -f2 | /bin/awk '{print $1}')
+if [ "$eth1" != "" ]
+then
+    /bin/echo "eth1: $eth1"
+fi
+
+# eth2
+declare eth2=$(/sbin/ifconfig eth2 | /bin/grep 'inet addr:' | /bin/cut -d: -f2 | /bin/awk '{print $1}')
+if [ "$eth2" != "" ]
+then
+    /bin/echo "eth2: $eth2"
+fi

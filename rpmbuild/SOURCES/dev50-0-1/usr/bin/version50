@@ -1,0 +1,11 @@
+#!/bin/bash
+
+# determine version
+declare rpmquery=$(/usr/bin/rpmquery cs50-dev)
+declare version=$(/usr/bin/expr "$rpmquery" : 'cs50-dev-\([0-9]*-[0-9]*\)\.i386')
+if [ "$version" == "" ]
+then
+    echo "unknown version"
+else
+    echo $version
+fi

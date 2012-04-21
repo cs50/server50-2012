@@ -1,0 +1,8 @@
+[cs50]
+name=CS50 Appliance 3
+baseurl=http://mirror.cs50.net/appliance/3/RPMS/
+enabled=1
+metadata_expire=300
+gpgcheck=0
+priority=1
+protect=1
