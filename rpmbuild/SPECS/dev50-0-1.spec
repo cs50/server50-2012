@@ -91,7 +91,6 @@ Requires: telnet
 Requires: tidy
 Requires: traceroute
 Requires: tree
-Requires: tunnel50
 Requires: valgrind
 Requires: vim
 Requires: webmin
