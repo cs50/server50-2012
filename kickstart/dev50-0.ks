@@ -20,7 +20,7 @@ cdrom
 install
 keyboard us
 lang en_US.UTF-8
-network --hostname dev.localdomain
+#network --hostname dev.localdomain
 
 # move to files (DNS binds to eth1 and hardcodes MACs)
 #network --bootproto=dhcp --device=eth0 --noipv6 --onboot=yes
@@ -57,8 +57,6 @@ timezone --utc Etc/GMT
 
 @base
 @core
-
-dev50
 
 #ack
 
@@ -120,6 +118,9 @@ dev50
 
 # -abrt and -policycoreutils above doesn't work
 /usr/bin/yum -y remove abrt policycoreutils
+
+# dev50 above doesn't work (presumably because of its restarting networking)
+/usr/bin/yum -y install dev50
 
 # force developer to change password
 /usr/bin/passwd -d root
