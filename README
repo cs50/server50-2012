@@ -1,4 +1,11 @@
+INSTALL
+
 % sudo yum install rpm-build redhat-rpm-config
 % echo '%_topdir /path/to/dev50/rpmbuild' > ~/.rpmmacros 
 
 Source: http://wiki.centos.org/HowTos/SetupRpmBuildEnvironment
+
+
+TODO
+
+* Add all yum repos to kickstart to see if it installs.
