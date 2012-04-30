@@ -70,7 +70,7 @@ Requires: openssh-server
 Requires: patch
 
 Requires: perl
-Requires: php = 5.4
+Requires: php >= 5.4
 Requires: php-mysql
 Requires: php-pear
 Requires: php-pdo
