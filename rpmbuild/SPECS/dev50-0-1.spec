@@ -203,10 +203,6 @@ do
     fi
 done
 
-# /boot/grub2/grub.cfg
-#/bin/sed -i -e 's/^GRUB_TIMEOUT=.*$/GRUB_TIMEOUT=2/' /etc/default/grub
-#/sbin/grub2-mkconfig -o /boot/grub2/grub.cfg > /dev/null 2>&1
-
 # /etc/passwd
 /usr/sbin/adduser --comment "John Harvard" --gid apache --groups wheel jharvard > /dev/null 2>&1
 /bin/echo crimson | /usr/bin/passwd --stdin jharvard > /dev/null 2>&1
