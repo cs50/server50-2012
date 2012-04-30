@@ -48,6 +48,8 @@ Requires: man-pages
 Requires: memcached
 Requires: mercurial
 Requires: mlocate
+Requires: mongo-10gen
+Requires: mongo-10gen-server
 Requires: mysql
 Requires: mysql-server
 Requires: nano
@@ -68,7 +70,7 @@ Requires: openssh-server
 Requires: patch
 
 Requires: perl
-Requires: php
+Requires: php = 5.4
 Requires: php-mysql
 Requires: php-pear
 Requires: php-pdo
@@ -113,13 +115,15 @@ Requires: yum-plugin-protectbase
 Requires: yum-utils
 
 Requires(post): coreutils 
+Requires(post): httpd
+Requires(post): memcached
 Requires(post): mlocate
+Requires(post): mongod
 Requires(post): mysql
 Requires(post): mysql-server
 Requires(post): php-pear
 Requires(post): rpm 
-Requires(post): rsync
-Requires(post): sed
+Requires(post): openssh-server
 Requires(post): shadow-utils
 Requires(post): yum-utils
 
@@ -211,9 +215,17 @@ echo "   Reset John Harvard's password to \"crimson\"."
 
 # /home/jharvard/logs
 /bin/mkdir /home/jharvard/logs > /dev/null 2>&1
-/bin/chown -R jharvard:apache /home/jharvard/logs > /dev/null 2>&1
+/bin/chown jharvard:apache /home/jharvard/logs > /dev/null 2>&1
 /bin/chmod 0770 /home/jharvard/logs > /dev/null 2>&1
-/bin/chmod 0660 /home/jharvard/logs/* > /dev/null 2>&1
+
+# /home/jharvard/vhosts
+/bin/mkdir /home/jharvard/vhosts > /dev/null 2>&1
+/bin/chown jharvard:apache /home/jharvard/vhosts > /dev/null 2>&1
+/bin/chmod 0770 /home/jharvard/vhosts > /dev/null 2>&1
+
+# /home/jharvard/vhosts/localhost
+/bin/mkdir /home/jharvard/vhosts/localhost > /dev/null 2>&1
+/bin/chmod 0770 /home/jharvard/vhosts/localhost > /dev/null 2>&1
 
 # disable services
 declare -a off=(ip6tables netconsole netfs postfix psacct rdisc saslauthd)
@@ -224,12 +236,15 @@ do
 done
 
 # enable services
-declare -a on=(httpd iptables memcached mysqld ntpd ntpdate sshd udev-post)
+declare -a on=(httpd iptables memcached mongod mysqld ntpd ntpdate sshd udev-post)
 for service in "${on[@]}"
 do
     /sbin/chkconfig $service on > /dev/null 2>&1
     echo "   Enabled $service."
 done
+
+# remove /etc/httpd/conf.d/welcome.conf (because its presence disables Indexes)
+/bin/rm -f /etc/httpd/conf.d/welcome.conf > /dev/null 2>&1
 
 # reset MySQL privileges
 /sbin/service mysqld stop > /dev/null 2>&1
@@ -266,21 +281,21 @@ EOF
 echo "   Reset John Harvard's password for MySQL to \"crimson\"."
 
 # restart services
-declare -a restart=(httpd iptables network smb sshd usermin webmin)
-for service in "${restart[@]}"
-do
-    /sbin/service $service restart > /dev/null 2>&1
-    echo "   Restarted $service."
-done
+if ! /usr/bin/rpmquery --quiet dev50
+then
+    declare -a restart=(httpd iptables memcached mongod network sshd usermin webmin)
+    for service in "${restart[@]}"
+    do
+        /sbin/service $service restart > /dev/null 2>&1
+        echo "   Restarted $service."
+    done
+fi
 
 # import keys (to avoid warnings during future software updates)
 /bin/rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-6 > /dev/null 2>&1
 /bin/rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-remi > /dev/null 2>&1
 /bin/rpm --import http://apt.sw.be/RPM-GPG-KEY.dag.txt > /dev/null 2>&1
 /bin/rpm --import http://www.webmin.com/jcameron-key.asc > /dev/null 2>&1
-
-# remove /etc/httpd/conf.d/welcome.conf (because its presence disables Indexes)
-/bin/rm -f /etc/httpd/conf.d/welcome.conf > /dev/null 2>&1
 
 # remove sources
 /bin/rm -rf /tmp/%{name}-%{version}-%{release}

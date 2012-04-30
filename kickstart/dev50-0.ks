@@ -21,14 +21,20 @@ reboot
 
 repo --cost=1 --name=os --mirrorlist=http://mirrorlist.centos.org/?arch=x86_64&release=6.2&repo=os
 repo --cost=1 --name=updates --mirrorlist=http://mirrorlist.centos.org/?arch=x86_64&release=6.2&repo=updates
+
+# http://mirror.cs50.com/dev50/0/
 repo --cost=2 --name=dev50 --baseurl=http://mirror.cs50.com/dev50/0/RPMS/
+
+# http://mirror.cs50.net/appliance/3/
 repo --cost=3 --name=cs50 --baseurl=http://mirror.cs50.net/appliance/3/RPMS/
+
+# http://www.mongodb.org/display/DOCS/CentOS+and+Fedora+Packages
+repo --cost=99 --name=10gen --baseurl=http://downloads-distro.mongodb.org/repo/redhat/os/x86_64
 
 # http://fedoraproject.org/wiki/EPEL
 repo --cost=99 --name=epel --mirrorlist=https://mirrors.fedoraproject.org/metalink?repo=epel-6&arch=x86_64
 
 # https://github.com/joyent/node/wiki/Installing-Node.js-via-package-manager
-#repo --cost=99 --name=nodejs --mirrorlist=http://nodejs.tchol.org/mirrors/nodejs-stable-el6
 repo --cost=99 --name=nodejs --baseurl=http://nodejs.tchol.org/stable/el6/x86_64/
 
 # http://blog.famillecollet.com/pages/Config-en
@@ -36,7 +42,6 @@ repo --cost=99 --name=remi --mirrorlist=http://rpms.famillecollet.com/enterprise
 repo --cost=99 --name=remi-test --mirrorlist=http://rpms.famillecollet.com/enterprise/6/test/mirror
 
 # http://wiki.centos.org/AdditionalResources/Repositories/RPMForge
-#repo --cost=99 --name=rpmforge --mirrorlist=http://apt.sw.be/redhat/el6/en/mirrors-rpmforge
 repo --cost=99 --name=rpmforge --baseurl=http://apt.sw.be/redhat/el6/en/x86_64/rpmforge
 
 # http://www.webmin.com/rpm.html
@@ -75,25 +80,8 @@ dev50
 # -abrt and -policycoreutils above doesn't work
 /usr/bin/yum -y remove abrt policycoreutils
 
-# force developer to change password
-/usr/bin/passwd -d root
-/usr/bin/chage -d 0 root
-
-# finish configuration after a boot
-#/bin/cat > /etc/rc.d/rc.local << "EOF"
-##!/bin/bash
-
-# ensure networking has enough time to start
-#/bin/sleep 10
-
-# re-install dev50's RPM (to configure MySQL)
-#/usr/bin/yum -y reinstall dev50
-
-# only do this once
-#/bin/rm -f /etc/rc.d/rc.local
-#/usr/bin/poweroff
-#EOF
-#/bin/chmod 755 /etc/rc.d/rc.local
+# lock root
+/usr/bin/passwd -l root
 
 
 ############################################################################
