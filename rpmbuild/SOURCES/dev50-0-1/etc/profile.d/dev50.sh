@@ -1,8 +1,3 @@
-# configure prompt
-if [ "$PS1" ]; then
-  export PS1="\u@\h (\w): "
-fi
-
 # disable auto-logout
 export TMOUT=0
 
