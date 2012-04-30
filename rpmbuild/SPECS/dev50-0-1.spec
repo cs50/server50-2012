@@ -85,7 +85,6 @@ Requires: php-xml
 Requires: phpMyAdmin
 Requires: python
 Requires: redhat-rpm-config
-Requires: remi-release
 Requires: render50
 Requires: rpm 
 Requires: rpm-build
@@ -118,7 +117,7 @@ Requires(post): coreutils
 Requires(post): httpd
 Requires(post): memcached
 Requires(post): mlocate
-Requires(post): mongod
+Requires(post): mongo-10gen-server
 Requires(post): mysql
 Requires(post): mysql-server
 Requires(post): php-pear
@@ -293,7 +292,6 @@ fi
 
 # import keys (to avoid warnings during future software updates)
 /bin/rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-6 > /dev/null 2>&1
-/bin/rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-remi > /dev/null 2>&1
 /bin/rpm --import http://apt.sw.be/RPM-GPG-KEY.dag.txt > /dev/null 2>&1
 /bin/rpm --import http://www.webmin.com/jcameron-key.asc > /dev/null 2>&1
 
