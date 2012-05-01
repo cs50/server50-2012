@@ -4,8 +4,3 @@ INSTALL
 % echo '%_topdir /path/to/dev50/rpmbuild' > ~/.rpmmacros 
 
 Source: http://wiki.centos.org/HowTos/SetupRpmBuildEnvironment
-
-
-TODO
-
-* /etc/sysconfig/iptables doesn't persist after install.
