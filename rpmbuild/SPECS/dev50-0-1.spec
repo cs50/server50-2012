@@ -92,6 +92,7 @@ Requires: redhat-rpm-config
 Requires: render50
 Requires: rpm 
 Requires: rpm-build
+Requires: rpmforge-release
 Requires: rsnapshot
 Requires: rsync
 Requires: ruby
