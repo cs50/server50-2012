@@ -76,11 +76,48 @@ dev50
 
 %post
 
+# lock root
+/usr/bin/passwd -l root
+
 # -abrt and -policycoreutils above doesn't work
 /usr/bin/yum -y remove abrt policycoreutils
 
-# lock root
-/usr/bin/passwd -l root
+# updates
+/usr/bin/yum -y update
+
+# finish configuration after a boot
+/bin/cat > /etc/rc.d/rc.local << "EOF"
+#!/bin/bash
+
+# ensure networking has enough time to start
+/bin/sleep 10
+
+# download and mount VMware Tools ISO
+/usr/bin/wget --directory-prefix=/tmp http://softwareupdate.vmware.com/cds/vmw-desktop/fusion/4.1.1/536016/packages/com.vmware.fusion.tools.linux.zip.tar
+/bin/tar xf /tmp/com.vmware.fusion.tools.linux.zip.tar -C /tmp
+/usr/bin/unzip /tmp/com.vmware.fusion.tools.linux.zip -d /tmp
+/bin/mount -r -o loop -t iso9660 /tmp/payload/linux.iso /mnt
+/bin/tar xf /mnt/VMwareTools-8.8.1-528969.tar.gz -C /tmp
+/bin/rm -f /tmp/vmware-tools-distrib/lib/sbin32/vmware-checkvm
+
+# install VMware Tools
+/tmp/vmware-tools-distrib/vmware-install.pl -d
+
+# tidy up
+/bin/rm -rf /tmp/vmware-tools-distrib
+/bin/umount /mnt
+/bin/rm -rf /tmp/payload
+/bin/rm -f /tmp/com.vmware.fusion.tools.linux.zip
+/bin/rm -f /tmp/com.vmware.fusion.tools.linux.zip.tar
+;;
+esac
+
+# kthxbai
+/bin/rm -f /etc/rc.d/rc.local
+/bin/rm -f /root/*
+/usr/bin/poweroff
+EOF
+/bin/chmod 0755 /etc/rc.d/rc.local
 
 
 ############################################################################

@@ -103,6 +103,7 @@ Requires: telnet
 Requires: tidy
 Requires: traceroute
 Requires: tree
+Requires: unzip
 Requires: valgrind
 Requires: vim
 Requires: webmin
@@ -112,6 +113,7 @@ Requires: yum-plugin-fastestmirror
 Requires: yum-plugin-priorities
 Requires: yum-plugin-protectbase
 Requires: yum-utils
+Requires: zip
 
 Requires(post): coreutils 
 Requires(post): httpd
