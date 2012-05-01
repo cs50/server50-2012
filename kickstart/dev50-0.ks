@@ -92,6 +92,9 @@ dev50
 # ensure networking has enough time to start
 /bin/sleep 10
 
+# re-install dev50 (to configure iptables, which anaconda overwrites)
+/usr/bin/yum -y reinstall dev50
+
 # download and mount VMware Tools ISO
 /usr/bin/wget --directory-prefix=/tmp http://softwareupdate.vmware.com/cds/vmw-desktop/fusion/4.1.1/536016/packages/com.vmware.fusion.tools.linux.zip.tar
 /bin/tar xf /tmp/com.vmware.fusion.tools.linux.zip.tar -C /tmp
