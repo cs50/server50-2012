@@ -91,9 +91,10 @@ dev50
 #!/bin/bash
 
 # ensure networking has enough time to start
-/bin/sleep 10
+/bin/sleep 20
 
-# re-install dev50 (to configure iptables, which anaconda overwrites)
+# re-install dev50
+# to configure iptables (which anaconda overwrites) and httpd (whose httpd.conf doesn't install first)
 /usr/bin/yum -y reinstall dev50
 
 # download and mount VMware Tools ISO
@@ -113,8 +114,6 @@ dev50
 /bin/rm -rf /tmp/payload
 /bin/rm -f /tmp/com.vmware.fusion.tools.linux.zip
 /bin/rm -f /tmp/com.vmware.fusion.tools.linux.zip.tar
-;;
-esac
 
 # kthxbai
 /bin/rm -f /etc/rc.d/rc.local

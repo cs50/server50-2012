@@ -271,22 +271,12 @@ EOF
 /sbin/service mysqld stop > /dev/null 2>&1
 /bin/mv /etc/.my.cnf /etc/my.cnf
 /sbin/service mysqld start > /dev/null 2>&1
-#echo "   Reset superuser's password for MySQL to \"crimson\"."
 echo "   Reset John Harvard's password for MySQL to \"crimson\"."
 
 # drop "Any User"
-/usr/bin/mysql --force --user=root --password=crimson > /dev/null 2>&1 <<"EOF"
+/usr/bin/mysql --force --user=jharvard --password=crimson > /dev/null 2>&1 <<"EOF"
 DROP USER ''@'%';
 EOF
-
-# reset John Harvard's password and privileges for MySQL
-#/usr/bin/mysql --force --user=root --password=crimson > /dev/null 2>&1 <<"EOF"
-#DROP USER 'jharvard'@'localhost';
-#CREATE USER 'jharvard'@'localhost' IDENTIFIED BY 'crimson';
-#GRANT ALL PRIVILEGES ON `%`.* TO 'jharvard'@'localhost';
-#FLUSH PRIVILEGES;
-#EOF
-#echo "   Reset John Harvard's password for MySQL to \"crimson\"."
 
 # restart services
 if ! /bin/grep --quiet ks= /proc/cmdline
