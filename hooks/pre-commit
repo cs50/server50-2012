@@ -2,4 +2,4 @@
 
 cd rpmbuild/
 rm -f SOURCES.zip
-zip -r SOURCES.zip SOURCES
+zip -qr SOURCES.zip SOURCES
