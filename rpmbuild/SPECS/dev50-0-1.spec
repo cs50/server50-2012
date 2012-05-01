@@ -70,6 +70,10 @@ Requires: openssh-server
 Requires: patch
 
 Requires: perl
+
+# for Webmin's sudo=1
+Requires: perl-IO-Tty
+
 Requires: php >= 5.4
 Requires: php-mysql
 Requires: php-pear
