@@ -9,4 +9,3 @@ Source: http://wiki.centos.org/HowTos/SetupRpmBuildEnvironment
 TODO
 
 * /etc/sysconfig/iptables doesn't persist after install.
-* Need to detect anaconda.
