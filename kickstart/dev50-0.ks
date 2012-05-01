@@ -41,7 +41,7 @@ repo --cost=99 --name=nodejs --baseurl=http://nodejs.tchol.org/stable/el6/x86_64
 repo --cost=99 --name=remi --baseurl=http://rpms.famillecollet.com/enterprise/6/remi/x86_64
 repo --cost=99 --name=remi-test --baseurl=http://rpms.famillecollet.com/enterprise/6/test/x86_64
 
-# http://wiki.centos.org/AdditionalResources/Repositories/RPMForge
+# http://wiki.centos.org/AdditionalResources/Repositories/RPMForge (for rsnapshot)
 repo --cost=99 --name=rpmforge --baseurl=http://apt.sw.be/redhat/el6/en/x86_64/rpmforge
 
 # http://www.webmin.com/rpm.html
