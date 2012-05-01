@@ -276,7 +276,7 @@ EOF
 echo "   Reset John Harvard's password for MySQL to \"crimson\"."
 
 # restart services
-if ! /bin/grep -q ks= /proc/cmdline
+if ! /bin/grep --quiet ks= /proc/cmdline
 then
     declare -a restart=(httpd iptables memcached mongod network sshd usermin webmin)
     for service in "${restart[@]}"
