@@ -1,0 +1,6 @@
+#!/bin/bash
+
+cd rpmbuild/
+rm -rf SOURCES
+unzip -q SOURCES.zip
+rm -f SOURCES.zip
