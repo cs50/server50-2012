@@ -247,7 +247,7 @@ done
 # remove /etc/httpd/conf.d/welcome.conf (because its presence disables Indexes)
 /bin/rm -f /etc/httpd/conf.d/welcome.conf > /dev/null 2>&1
 
-# reset MySQL privileges
+# reset root's privileges for MySQL
 /sbin/service mysqld stop > /dev/null 2>&1
 /bin/mv /etc/my.cnf /etc/.my.cnf
 /bin/cp -a /etc/.my.cnf /etc/my.cnf
@@ -261,25 +261,31 @@ user=mysql
 EOF
 /sbin/service mysqld start > /dev/null 2>&1
 /usr/bin/mysql --user=root > /dev/null 2>&1 <<"EOF"
-DELETE FROM mysql.user WHERE User = '';
 DELETE FROM mysql.user WHERE User = 'root';
-INSERT INTO mysql.user (Host, User, Password, Grant_priv, Super_priv) VALUES('localhost', 'root', PASSWORD('crimson'), 'Y', 'Y');
+DELETE FROM mysql.user WHERE User = 'jharvard';
+INSERT INTO mysql.user (Host, User, Password, Grant_priv, Super_priv) VALUES('localhost', 'jharvard', PASSWORD('crimson'), 'Y', 'Y');
 FLUSH PRIVILEGES;
-GRANT ALL ON *.* TO 'root'@'localhost';
+GRANT ALL ON *.* TO 'jharvard'@'localhost';
 EOF
 /sbin/service mysqld stop > /dev/null 2>&1
 /bin/mv /etc/.my.cnf /etc/my.cnf
 /sbin/service mysqld start > /dev/null 2>&1
-echo "   Reset superuser's password for MySQL to \"crimson\"."
-
-# reset John Harvard's password for MySQL
-/usr/bin/mysql --force --user=root --password=crimson > /dev/null 2>&1 <<"EOF"
-DROP USER 'jharvard'@'%';
-CREATE USER 'jharvard'@'%' IDENTIFIED BY 'crimson';
-GRANT ALL PRIVILEGES ON `jharvard\_%`.* TO 'jharvard'@'%';
-FLUSH PRIVILEGES;
-EOF
+#echo "   Reset superuser's password for MySQL to \"crimson\"."
 echo "   Reset John Harvard's password for MySQL to \"crimson\"."
+
+# drop "Any User"
+/usr/bin/mysql --force --user=root --password=crimson > /dev/null 2>&1 <<"EOF"
+DROP USER ''@'%';
+EOF
+
+# reset John Harvard's password and privileges for MySQL
+#/usr/bin/mysql --force --user=root --password=crimson > /dev/null 2>&1 <<"EOF"
+#DROP USER 'jharvard'@'localhost';
+#CREATE USER 'jharvard'@'localhost' IDENTIFIED BY 'crimson';
+#GRANT ALL PRIVILEGES ON `%`.* TO 'jharvard'@'localhost';
+#FLUSH PRIVILEGES;
+#EOF
+#echo "   Reset John Harvard's password for MySQL to \"crimson\"."
 
 # restart services
 if ! /bin/grep --quiet ks= /proc/cmdline
