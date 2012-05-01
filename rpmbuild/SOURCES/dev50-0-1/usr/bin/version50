@@ -1,0 +1,11 @@
+#!/bin/bash
+
+# determine version
+declare rpmquery=$(/usr/bin/rpmquery dev50)
+declare version=$(/usr/bin/expr "$rpmquery" : 'dev50-\([0-9]*-[0-9]*\)\.x86_64')
+if [ "$version" == "" ]
+then
+    echo "unknown version"
+else
+    echo $version
+fi

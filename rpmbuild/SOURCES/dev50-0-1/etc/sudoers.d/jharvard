@@ -1,0 +1,4 @@
+Defaults:jharvard secure_path=/sbin:/bin:/usr/local/sbin:/usr/sbin:/usr/local/bin:/usr/bin
+
+## Allows people in group wheel to run all commands without a password
+%wheel        ALL=(ALL)       NOPASSWD: ALL

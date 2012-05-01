@@ -1,0 +1,12 @@
+#!/bin/bash
+
+# header
+declare version=$(/usr/bin/version50)
+/bin/echo "This is CS50 Dev VM $version." > /etc/issue
+/bin/echo >> /etc/issue
+
+# ip50
+/usr/bin/ip50 >> /etc/issue
+
+# footer
+/bin/echo >> /etc/issue
