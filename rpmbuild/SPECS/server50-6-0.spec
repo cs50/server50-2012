@@ -271,6 +271,7 @@ user=mysql
 EOF
 /sbin/service mysqld start > /dev/null 2>&1
 /usr/bin/mysql --user=root > /dev/null 2>&1 <<"EOF"
+DELETE FROM mysql.user WHERE User = '';
 DELETE FROM mysql.user WHERE User = 'root';
 DELETE FROM mysql.user WHERE User = 'jharvard';
 INSERT INTO mysql.user (Host, User, Password, Grant_priv, Super_priv) VALUES('localhost', 'jharvard', PASSWORD('crimson'), 'Y', 'Y');
@@ -281,11 +282,6 @@ EOF
 /bin/mv /etc/.my.cnf /etc/my.cnf
 /sbin/service mysqld start > /dev/null 2>&1
 echo "   Reset John Harvard's password for MySQL to \"crimson\"."
-
-# drop "Any User"
-/usr/bin/mysql --force --user=jharvard --password=crimson > /dev/null 2>&1 <<"EOF"
-DROP USER ''@'%';
-EOF
 
 # restart services (if upgrading RPM)
 # http://fedoraproject.org/wiki/Packaging:ScriptletSnippets
