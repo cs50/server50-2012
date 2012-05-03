@@ -1,14 +1,15 @@
 ###########################################################################
-Summary: Configures the CS50 dev VM.
-Name: dev50
-Version: 0
-Release: 1 
+Summary: Configures CS50 Server.
+Name: server50 
+Version: 6
+Release: 0
 License: CC BY-NC-SA 3.0
 Group: System Environment/Base
 Vendor: CS50
 BuildArch: x86_64
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root
 Requires: ack
+Requires: acpid
 Requires: centos-release = 6-2.el6.centos.7
 Requires: bc
 
@@ -18,6 +19,7 @@ Requires: binutils
 Requires: bind-utils
 Requires: clang
 Requires: coreutils 
+Requires: cronie
 Requires: cs50-library-c
 Requires: cs50-library-php
 Requires: ctags
@@ -237,7 +239,8 @@ do
 done
 
 # enable services
-declare -a on=(httpd iptables memcached mongod mysqld ntpd ntpdate sshd udev-post)
+declare -a on=(acpid crond dcoreutils kms_autoinstaller httpd iptables memcached mongod mysqld ntpd ntpdate sshd udev-post webmin)
+wer
 for service in "${on[@]}"
 do
     /sbin/chkconfig $service on > /dev/null 2>&1
@@ -277,10 +280,11 @@ echo "   Reset John Harvard's password for MySQL to \"crimson\"."
 DROP USER ''@'%';
 EOF
 
-# restart services
-if ! /bin/grep --quiet ks= /proc/cmdline
+# restart services (if upgrading RPM)
+# http://fedoraproject.org/wiki/Packaging:ScriptletSnippets
+if [ $1 -ne 1 ]
 then
-    declare -a restart=(httpd iptables memcached mongod network sshd usermin webmin)
+    declare -a restart=(httpd iptables memcached mongod network sshd webmin)
     for service in "${restart[@]}"
     do
         /sbin/service $service restart > /dev/null 2>&1
