@@ -101,7 +101,6 @@ Requires: ruby
 Requires: rubygems
 Requires: screen
 Requires: sed
-Requires: setup
 Requires: shadow-utils
 Requires: sudo
 Requires: system-config-firewall-tui
@@ -124,6 +123,10 @@ Requires: zip
 
 Requires(post): coreutils 
 Requires(post): httpd
+
+# to ensure /etc/hosts exists before we overwrite
+Requires(post): iptables
+
 Requires(post): memcached
 Requires(post): mlocate
 Requires(post): mongo-10gen-server
@@ -132,6 +135,10 @@ Requires(post): mysql-server
 Requires(post): php-pear
 Requires(post): rpm 
 Requires(post): openssh-server
+
+# to ensure /etc/sysconfig/selinux exists before we overwrite
+Requires(post): selinux-policy
+
 Requires(post): shadow-utils
 Requires(post): yum-utils
 
