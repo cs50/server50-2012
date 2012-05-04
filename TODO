@@ -1,3 +1,6 @@
 * Figure out why /etc/hosts is getting clobbered.
 * Figure out why /etc/sysconfig/iptables is getting clobbered.
-* Figure out why root login for MySQL still works.
+* Add swap and boot partitions?
+* Figure out why webmin doesn't install during boxgrind.
+
+* WRITE MY OWN PLUGIN WITH OWN KS TEMPLATE AND NO MANUAL OVERRIDES OF SETTINGS.
