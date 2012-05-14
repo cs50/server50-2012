@@ -250,7 +250,6 @@ done
 
 # enable services
 declare -a on=(acpid crond dcoreutils kms_autoinstaller httpd iptables memcached mongod mysqld ntpd ntpdate sshd udev-post webmin)
-wer
 for service in "${on[@]}"
 do
     /sbin/chkconfig $service on > /dev/null 2>&1
@@ -286,9 +285,8 @@ EOF
 /sbin/service mysqld start > /dev/null 2>&1
 echo "   Reset John Harvard's password for MySQL to \"crimson\"."
 
-# restart services (if upgrading RPM)
-# http://fedoraproject.org/wiki/Packaging:ScriptletSnippets
-if [ $1 -ne 1 ]
+# restart services (if not boxgrinding or kickstarting in single-user mode)
+if [[ ! `/sbin/runlevel` =~ ' S' ]]
 then
     declare -a restart=(httpd iptables memcached mongod network sshd webmin)
     for service in "${restart[@]}"
