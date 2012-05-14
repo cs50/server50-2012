@@ -5,17 +5,18 @@ summary: This is CS50 Server.
 version: 6
 release: 0
 
+# TESTING NEW ORDER
 hardware:
   cpus: 1
   memory: 512
   partitions:
+    "/boot":
+      size: 0.1
     "/":
       size: 32
       type: ext4
-#    "/boot":
-#      size: .1
-#    "swap":
-#      size: 1
+    "swap":
+      size: 1
 
 os:
   name: centos
@@ -64,14 +65,6 @@ repos:
 packages:
   - @core
   - server50
-#  - vmware-tools-esx-nox
-#  - vmware-tools-esx-kmods
-
-files:
-#  "/etc/yum.repos.d":
-#    - "boxgrinder.repo"
-  "/etc":
-    - "resolv.conf"
 
 post:
   base:
@@ -79,33 +72,22 @@ post:
       # lock root
       /usr/bin/passwd -l root
  
-      #/usr/bin/yum -y install server50
-      # disable SELinux (just do a `yum -y install server50` here?)
-      #if [ -e "/etc/sysconfig/selinux" ]
-      #then
-      #    /bin/sed -i 's/^SELINUX=.*/SELINUX=disabled/g' /etc/sysconfig/selinux
-      #fi
-
-      # LIBGUESTFS_MEMSIZE=1024
-      #LIBGUESTFS_MEMSIZE=1024 /usr/bin/yum --nogpg -y install server50 > /tmp/SAVE 2>&1
-
-      # fails to install during kickstart because /etc/centos-release isn't yet in place
-      /sbin/ifconfig > /tmp/SAVE3 2>&1
-      /bin/echo "--" >> /tmp/SAVE3 2>&1
-      /bin/cat /etc/resolv.conf >> /tmp/SAVE3 2>&1
-      /bin/echo "--" >> /tmp/SAVE3 2>&1
-      #LIBGUESTFS_MEMSIZE=768 /usr/bin/yum --nogpg -y install http://prdownloads.sourceforge.net/webadmin/webmin-1.580-1.noarch.rpm >> /tmp/SAVE3 2>&1
-
+      # fails to install above because /etc/centos-release doesn't exist yet
       # https://community.jboss.org/thread/156045
-      /usr/bin/yum --nogpg -y install http://prdownloads.sourceforge.net/webadmin/webmin-1.580-1.noarch.rpm >> /tmp/SAVE3 2>&1
-      /etc/init.d/webmin stop >> /tmp/SAVE3 2>&1
-      #umount /sysroot/dev
+      /usr/bin/yum --nogpg -y install http://prdownloads.sourceforge.net/webadmin/webmin-1.580-1.noarch.rpm
+      /etc/init.d/webmin stop
 
-      # unneeded
-      /usr/bin/yum -y remove abrt at audit cpuspeed hal kexec-tools lvm2 mdadm quota readahead rng-tools smartmontools sysstat
+      # TEMP (works)
+      #/usr/bin/yum --nogpg -y install vmware-tools-esx-kmods vmware-tools-esx-nox
 
-      # unwanted
-      #/bin/rm -f /etc/init.d/motd
-#  vmware:
-#    - |
-#      /usr/bin/yum --nogpg -y install vmware-tools-esx-kmods vmware-tools-esx-nox
+      # TESTING
+      echo APPLPOST >> /tmp/ONE
+      cat /proc/cmdline >> /tmp/CMDLINE
+      runlevel >> /tmp/RUNLEVEL
+      /usr/bin/yum --nogpg -y reinstall server50
+
+      # avoids "according to mtab, /sys is already mounted on /sys" on boot
+      /bin/rm -f /etc/mtab
+
+      # TODO: unneeded?
+      #/usr/bin/yum -y remove abrt at audit cpuspeed hal kexec-tools lvm2 mdadm quota readahead rng-tools smartmontools sysstat

@@ -39,6 +39,12 @@ part <%= root %> --size <%= (partition['size'].to_f * 1024).to_i %> --fstype <%=
 %post
 
 #/usr/bin/yum -y reinstall server50
-/usr/bin/yum -y install http://prdownloads.sourceforge.net/webadmin/webmin-1.580-1.noarch.rpm
+#/usr/bin/yum -y install http://prdownloads.sourceforge.net/webadmin/webmin-1.580-1.noarch.rpm
+
+# fails to install during kickstart because /etc/centos-release isn't yet in place
+#/usr/bin/yum --nogpg -y install http://prdownloads.sourceforge.net/webadmin/webmin-1.580-1.noarch.rpm > /tmp/SAVE2 2>&1
+
+# unneeded
+#/usr/bin/yum -y remove abrt at audit cpuspeed hal kexec-tools lvm2 mdadm quota readahead rng-tools smartmontools sysstat
 
 %end
