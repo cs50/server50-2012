@@ -1,1 +1,2 @@
 * Disable non-CentOS repos by default.
+* Ensure hook works.
