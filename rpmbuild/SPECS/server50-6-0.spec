@@ -121,9 +121,6 @@ Requires: yum-plugin-protectbase
 Requires: yum-utils
 Requires: zip
 
-# to ensure /etc/centos-release exists for webmin's RPM
-#Requires(pre): centos-release
-
 Requires(post): coreutils 
 Requires(post): httpd
 
@@ -282,13 +279,12 @@ GRANT ALL ON *.* TO 'jharvard'@'localhost';
 EOF
 /sbin/service mysqld stop > /dev/null 2>&1
 /bin/mv /etc/.my.cnf /etc/my.cnf
-/sbin/service mysqld start > /dev/null 2>&1
 echo "   Reset John Harvard's password for MySQL to \"crimson\"."
 
 # restart services (if not boxgrinding or kickstarting in single-user mode)
-if [[ ! `/sbin/runlevel` =~ ' S' ]]
+if [[ ! `/sbin/runlevel` =~ ^.\ S|unknown$ ]]
 then
-    declare -a restart=(httpd iptables memcached mongod network sshd webmin)
+    declare -a restart=(httpd iptables memcached mongod mysqld network sshd webmin)
     for service in "${restart[@]}"
     do
         /sbin/service $service restart > /dev/null 2>&1
