@@ -5,7 +5,6 @@ summary: This is CS50 Server.
 version: 6
 release: 0
 
-# TESTING NEW ORDER
 hardware:
   cpus: 1
   memory: 512
@@ -28,26 +27,12 @@ repos:
     baseurl: "file:///DVD"
     ephemeral: true
     #mirrorlist: "http://mirrorlist.centos.org/?arch=x86_64&release=6.2&repo=os"
+# TODO: re-enable updates
 #  - name: "updates"
 #    mirrorlist: "http://mirrorlist.centos.org/?arch=x86_64&release=6.2&repo=updates"
 #    ephemeral: true
-  - name: "cs50"
-    baseurl: "http://mirror.cs50.net/appliance/3/RPMS/"
-    ephemeral: true
   - name: "server50"
     baseurl: "http://mirror.cs50.net/server50/6/RPMS/"
-    ephemeral: true
-  - name: "webmin"
-    mirrorlist: "http://download.webmin.com/download/yum/mirrorlist"
-    ephemeral: true
-  - name: "10gen"
-    baseurl: "http://downloads-distro.mongodb.org/repo/redhat/os/x86_64/"
-    ephemeral: true
-  - name: "epel"
-    mirrorlist: "https://mirrors.fedoraproject.org/metalink?repo=epel-6&arch=x86_64"
-    ephemeral: true
-  - name: "nodejs"
-    baseurl: "http://nodejs.tchol.org/stable/el6/x86_64/"
     ephemeral: true
   - name: "remi"
     baseurl: "http://rpms.famillecollet.com/enterprise/6/remi/x86_64/"
@@ -55,8 +40,17 @@ repos:
   - name: "remi-test"
     baseurl: "http://rpms.famillecollet.com/enterprise/6/test/x86_64/"
     ephemeral: true
+  - name: "epel"
+    mirrorlist: "https://mirrors.fedoraproject.org/metalink?repo=epel-6&arch=x86_64"
+    ephemeral: true
   - name: "rpmforge"
     baseurl: "http://apt.sw.be/redhat/el6/en/x86_64/rpmforge/"
+    ephemeral: true
+  - name: "10gen"
+    baseurl: "http://downloads-distro.mongodb.org/repo/redhat/os/x86_64/"
+    ephemeral: true
+  - name: "nodejs"
+    baseurl: "http://nodejs.tchol.org/stable/el6/x86_64/"
     ephemeral: true
   - name: "vmware-tools"
     baseurl: "http://packages.vmware.com/tools/esx/latest/rhel6/x86_64/"
@@ -72,22 +66,14 @@ post:
       # lock root
       /usr/bin/passwd -l root
  
-      # fails to install above because /etc/centos-release doesn't exist yet
-      # https://community.jboss.org/thread/156045
-      /usr/bin/yum --nogpg -y install http://prdownloads.sourceforge.net/webadmin/webmin-1.580-1.noarch.rpm
-      /etc/init.d/webmin stop
-
       # TEMP (works)
       #/usr/bin/yum --nogpg -y install vmware-tools-esx-kmods vmware-tools-esx-nox
 
-      # TESTING
-      echo APPLPOST >> /tmp/ONE
-      cat /proc/cmdline >> /tmp/CMDLINE
-      runlevel >> /tmp/RUNLEVEL
+      # reinstall to ensure its files overwrite other RPMs'
       /usr/bin/yum --nogpg -y reinstall server50
 
       # avoids "according to mtab, /sys is already mounted on /sys" on boot
       /bin/rm -f /etc/mtab
 
-      # TODO: unneeded?
-      #/usr/bin/yum -y remove abrt at audit cpuspeed hal kexec-tools lvm2 mdadm quota readahead rng-tools smartmontools sysstat
+      # unneeded
+      /usr/bin/yum -y remove audit 
