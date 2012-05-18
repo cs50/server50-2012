@@ -26,7 +26,6 @@ Requires: ctags
 Requires: diffutils
 Requires: dkms
 Requires: emacs
-Requires: epel-release
 Requires: ftp
 Requires: gcc
 Requires: gcc-c++
@@ -43,6 +42,7 @@ Requires: jre
 Requires: kernel
 Requires: kernel-devel
 Requires: kernel-headers
+Requires: keychain
 Requires: lynx
 Requires: make
 Requires: man
@@ -67,20 +67,19 @@ Requires: nodejs-compat-symlinks
 Requires: npm
 
 Requires: ntp
+Requires: openssl
+Requires: openssl-devel
 Requires: openssh-clients
 Requires: openssh-server
 Requires: patch
 
 Requires: perl
-
-# for Webmin's sudo=1
-Requires: perl-IO-Tty
-
 Requires: php >= 5.4
 Requires: php-mysql
 Requires: php-pear
 Requires: php-pdo
 Requires: php-pecl-memcache
+Requires: php-pecl-ncurses
 Requires: php-pecl-solr
 Requires: php-pecl-xdebug
 Requires: php-PHPMailer
@@ -94,11 +93,9 @@ Requires: redhat-rpm-config
 Requires: render50
 Requires: rpm 
 Requires: rpm-build
-Requires: rpmforge-release
 Requires: rsnapshot
 Requires: rsync
 Requires: ruby
-Requires: rubygems
 Requires: screen
 Requires: sed
 Requires: shadow-utils
@@ -112,7 +109,6 @@ Requires: tree
 Requires: unzip
 Requires: valgrind
 Requires: vim
-Requires: webmin
 Requires: wget
 Requires: words
 Requires: yum-plugin-fastestmirror
@@ -171,6 +167,13 @@ This is CS50.
 
 # /tmp/%{name}-%{version}-%{release}
 declare tmp=/tmp/%{name}-%{version}-%{release}
+
+# Ruby
+/usr/bin/gem update --system
+/usr/bin/gem install listen rake sass selenium-webdriver
+
+# Node
+/usr/bin/npm install -g express forever socket.io supervisor
 
 # remove deprecated directories and files
 declare -a deprecated=()
@@ -246,7 +249,7 @@ do
 done
 
 # enable services
-declare -a on=(acpid crond dcoreutils kms_autoinstaller httpd iptables memcached mongod mysqld ntpd ntpdate sshd udev-post webmin)
+declare -a on=(acpid crond dcoreutils kms_autoinstaller httpd iptables memcached mongod mysqld ntpd ntpdate sshd udev-post)
 for service in "${on[@]}"
 do
     /sbin/chkconfig $service on > /dev/null 2>&1
@@ -284,7 +287,7 @@ echo "   Reset John Harvard's password for MySQL to \"crimson\"."
 # restart services (if not boxgrinding or kickstarting in single-user mode)
 if [[ ! `/sbin/runlevel` =~ ^.\ S|unknown$ ]]
 then
-    declare -a restart=(httpd iptables memcached mongod mysqld network sshd webmin)
+    declare -a restart=(httpd iptables memcached mongod mysqld network sshd)
     for service in "${restart[@]}"
     do
         /sbin/service $service restart > /dev/null 2>&1
@@ -293,9 +296,10 @@ then
 fi
 
 # import keys (to avoid warnings during future software updates)
+/bin/rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-6 > /dev/null 2>&1
 /bin/rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-6 > /dev/null 2>&1
+/bin/rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-remi > /dev/null 2>&1
 /bin/rpm --import http://apt.sw.be/RPM-GPG-KEY.dag.txt > /dev/null 2>&1
-/bin/rpm --import http://www.webmin.com/jcameron-key.asc > /dev/null 2>&1
 
 # remove sources
 /bin/rm -rf /tmp/%{name}-%{version}-%{release}
@@ -315,5 +319,5 @@ fi
 
 ##########################################################################
 %changelog
-* Sat Apr 21 2012 David J. Malan <malan@harvard.edu> - 1-1
+* Sun Jun 3 2012 David J. Malan <malan@harvard.edu> - 6-0
 - Initial build
