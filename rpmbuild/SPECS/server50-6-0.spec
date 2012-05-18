@@ -169,11 +169,11 @@ This is CS50.
 declare tmp=/tmp/%{name}-%{version}-%{release}
 
 # Ruby
-/usr/bin/gem update --system
-/usr/bin/gem install listen rake sass selenium-webdriver
+/usr/bin/gem update --system > /dev/null 2>&1
+/usr/bin/gem install listen rake sass selenium-webdriver > /dev/null 2>&1
 
 # Node
-/usr/bin/npm install -g express forever socket.io supervisor
+/usr/bin/npm install -g express forever socket.io supervisor > /dev/null 2>&1
 
 # remove deprecated directories and files
 declare -a deprecated=()
