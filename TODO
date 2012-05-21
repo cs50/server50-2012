@@ -1,0 +1,3 @@
+* Figure out why /etc/hosts is getting clobbered.
+* Figure out why /etc/sysconfig/iptables is getting clobbered.
+* Figure out why root login for MySQL still works.

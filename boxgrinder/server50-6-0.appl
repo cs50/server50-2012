@@ -1,0 +1,73 @@
+# VMware: boxgrinder-build server50-1-0.appl -p vmware --platform-config type:personal,thin_disk:true --debug
+
+name: server50
+summary: This is CS50 Server.
+version: 6
+release: 0
+
+hardware:
+  cpus: 1
+  memory: 512
+  partitions:
+    "/":
+      size: 64
+      type: ext4
+
+os:
+  name: centos
+  password: crimson
+  version: 6
+
+default_repos: true
+
+repos:
+#  - name: "os"
+#    baseurl: "file:///media/"
+#    #mirrorlist: "http://mirrorlist.centos.org/?arch=x86_64&release=6.2&repo=os"
+#  - name: "updates"
+#    mirrorlist: "http://mirrorlist.centos.org/?arch=x86_64&release=6.2&repo=updates"
+  - name: "cs50"
+    baseurl: "http://mirror.cs50.net/appliance/3/RPMS/"
+  - name: "10gen"
+    baseurl: "http://downloads-distro.mongodb.org/repo/redhat/os/x86_64/"
+  - name: "epel"
+    mirrorlist: "https://mirrors.fedoraproject.org/metalink?repo=epel-6&arch=x86_64"
+  - name: "nodejs"
+    baseurl: "http://nodejs.tchol.org/stable/el6/x86_64/"
+  - name: "remi"
+    baseurl: "http://rpms.famillecollet.com/enterprise/6/remi/x86_64/"
+  - name: "remi-test"
+    baseurl: "http://rpms.famillecollet.com/enterprise/6/test/x86_64/"
+  - name: "rpmforge"
+    baseurl: "http://apt.sw.be/redhat/el6/en/x86_64/rpmforge/"
+  - name: "server50"
+    baseurl: "http://mirror.cs50.com/server50/0/RPMS/"
+  - name: "vmware-tools"
+    baseurl: "http://packages.vmware.com/tools/esx/latest/rhel6/x86_64/"
+  - name: "webmin"
+    mirrorlist: "http://download.webmin.com/download/yum/mirrorlist"
+
+packages:
+  - @base
+  - @core
+  - vmware-tools-esx-nox
+  - vmware-tools-esx-kmods
+
+post:
+  base:
+    - |
+      # lock root
+      /usr/bin/passwd -l root
+ 
+      /usr/bin/yum -y install server50
+      # disable SELinux (just do a `yum -y install server50` here?)
+      #if [ -e "/etc/sysconfig/selinux" ]
+      #then
+      #    /bin/sed -i 's/^SELINUX=.*/SELINUX=disabled/g' /etc/sysconfig/selinux
+      #fi
+
+      # unneeded
+      /usr/bin/yum -y remove abrt at audit cpuspeed hal kexec-tools lvm2 mdadm quota rng-tools smartmontools sysstat
+
+      # unwanted
+      /bin/rm -f /etc/init.d/motd

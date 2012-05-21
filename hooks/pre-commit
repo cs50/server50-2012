@@ -1,0 +1,7 @@
+#!/bin/bash
+
+cd rpmbuild/
+rm -f SOURCES.zip
+zip -qr SOURCES.zip SOURCES
+cd ../
+git add rpmbuild/SOURCES.zip
