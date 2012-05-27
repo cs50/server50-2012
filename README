@@ -4,3 +4,9 @@ INSTALL
 % echo '%_topdir /path/to/server50/rpmbuild' > ~/.rpmmacros 
 
 Source: http://wiki.centos.org/HowTos/SetupRpmBuildEnvironment
+
+
+USAGE
+
+# cd ./boxgrinder/
+# ./patches/boxgrinder-build server50-6-0.appl -p vmware --platform-config type:personal,thin_disk:true --debug --trace
