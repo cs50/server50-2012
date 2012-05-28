@@ -59,7 +59,7 @@ repos:
     ephemeral: true
   - name: "vmware-tools"
     baseurl: "http://packages.vmware.com/tools/esx/latest/rhel6/x86_64/"
-    ephemeral: true
+    #ephemeral: true
 
 packages:
   - @core
@@ -68,10 +68,12 @@ packages:
 #  - vmware-tools-esx-kmods
 
 files:
-#  "/etc/yum.repos.d":
-#    - "boxgrinder.repo"
+  #"/etc/yum.repos.d":
+  #  - "boxgrinder.repo"
   "/etc":
     - "resolv.conf"
+  "/etc/yum.repos.d":
+    - "vmware-tools2.repo"
 
 post:
   base:
@@ -101,11 +103,19 @@ post:
       /etc/init.d/webmin stop >> /tmp/SAVE3 2>&1
       #umount /sysroot/dev
 
+      # TEMP (works)
+      #/usr/bin/yum --nogpg -y install vmware-tools-esx-kmods vmware-tools-esx-nox
+
       # unneeded
       /usr/bin/yum -y remove abrt at audit cpuspeed hal kexec-tools lvm2 mdadm quota readahead rng-tools smartmontools sysstat
 
-      # unwanted
-      #/bin/rm -f /etc/init.d/motd
-#  vmware:
-#    - |
-#      /usr/bin/yum --nogpg -y install vmware-tools-esx-kmods vmware-tools-esx-nox
+  vmware:
+    #- "/usr/bin/yum --nogpg -y install vmware-tools-esx-kmods vmware-tools-esx-nox"
+    #- /usr/bin/yum --nogpg -y install http://packages.vmware.com/tools/esx/latest/rhel6/x86_64/vmware-tools-esx-kmods-8.6.5-2.x86_64.rpm
+    #- /usr/bin/yum --nogpg -y install http://packages.vmware.com/tools/esx/latest/rhel6/x86_64/vmware-tools-esx-nox-8.6.5-2.x86_64.rpm
+    #- /bin/rm -f /etc/yum.repos.d/boxgrinder.repo
+    #- "/usr/bin/yum --disablerepo=* --enablerepo=vmware-tools list"
+    - "/bin/ls /etc/yum.repos.d/"
+    - "/bin/cat /etc/resolv.conf"
+    - LIBGUESTFS_MEMSIZE=768 /usr/bin/yum --disablerepo=* --enablerepo=vmware-tools list
+    - "/usr/bin/yum --nogpg -y install vmware-tools-esx-kmods vmware-tools-esx-nox"
