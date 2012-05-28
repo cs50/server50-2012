@@ -121,6 +121,9 @@ Requires: yum-plugin-protectbase
 Requires: yum-utils
 Requires: zip
 
+# to ensure /etc/centos-release exists for webmin's RPM
+#Requires(pre): centos-release
+
 Requires(post): coreutils 
 Requires(post): httpd
 
