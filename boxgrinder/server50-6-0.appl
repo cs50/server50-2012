@@ -94,12 +94,15 @@ post:
       /bin/echo "--" >> /tmp/SAVE3 2>&1
       /bin/cat /etc/resolv.conf >> /tmp/SAVE3 2>&1
       /bin/echo "--" >> /tmp/SAVE3 2>&1
-      LIBGUESTFS_MEMSIZE=768 /usr/bin/yum --nogpg -y install http://prdownloads.sourceforge.net/webadmin/webmin-1.580-1.noarch.rpm >> /tmp/SAVE3 2>&1
+      #LIBGUESTFS_MEMSIZE=768 /usr/bin/yum --nogpg -y install http://prdownloads.sourceforge.net/webadmin/webmin-1.580-1.noarch.rpm >> /tmp/SAVE3 2>&1
+
+      # https://community.jboss.org/thread/156045
+      /usr/bin/yum --nogpg -y install http://prdownloads.sourceforge.net/webadmin/webmin-1.580-1.noarch.rpm >> /tmp/SAVE3 2>&1
       /etc/init.d/webmin stop >> /tmp/SAVE3 2>&1
       #umount /sysroot/dev
 
       # unneeded
-      #/usr/bin/yum -y remove abrt at audit cpuspeed hal kexec-tools lvm2 mdadm quota readahead rng-tools smartmontools sysstat
+      /usr/bin/yum -y remove abrt at audit cpuspeed hal kexec-tools lvm2 mdadm quota readahead rng-tools smartmontools sysstat
 
       # unwanted
       #/bin/rm -f /etc/init.d/motd
