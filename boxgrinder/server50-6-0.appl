@@ -81,6 +81,9 @@ post:
       #/usr/bin/yum --nogpg -y install vmware-tools-esx-kmods vmware-tools-esx-nox
 
       # TESTING
+      echo APPLPOST >> /tmp/ONE
+      cat /proc/cmdline >> /tmp/CMDLINE
+      runlevel >> /tmp/RUNLEVEL
       /usr/bin/yum --nogpg -y reinstall server50
 
       # avoids "according to mtab, /sys is already mounted on /sys" on boot
