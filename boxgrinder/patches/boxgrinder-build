@@ -44,6 +44,9 @@ module BoxGrinder
     def install_repos(guestfs)
     end
 
+    def set_label_for_swap_partitions(guestfs, guestfs_helper)
+    end
+
     def set_motd(guestfs)
     end
 
