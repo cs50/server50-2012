@@ -1,5 +1,5 @@
 rpmbuild/BUILD/
 rpmbuild/BUILDROOT/
 rpmbuild/RPMS/
-rpmbuild/SOURCES/
+rpmbuild/SOURCES/server50-*
 rpmbuild/SRPMS/

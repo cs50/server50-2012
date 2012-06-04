@@ -227,19 +227,6 @@ done
 /bin/echo crimson | /usr/bin/passwd --stdin jharvard > /dev/null 2>&1
 echo "   Reset John Harvard's password to \"crimson\"."
 
-# /home/jharvard
-/bin/chmod 0711 /home/jharvard > /dev/null 2>&1
-
-# /home/jharvard/logs
-/bin/mkdir /home/jharvard/logs > /dev/null 2>&1
-/bin/chown jharvard:apache /home/jharvard/logs > /dev/null 2>&1
-/bin/chmod 0770 /home/jharvard/logs > /dev/null 2>&1
-
-# /home/jharvard/vhosts
-/bin/mkdir /home/jharvard/vhosts > /dev/null 2>&1
-/bin/chown jharvard:apache /home/jharvard/vhosts > /dev/null 2>&1
-/bin/chmod 0771 /home/jharvard/vhosts > /dev/null 2>&1
-
 # disable services
 declare -a off=(ip6tables netconsole netfs postfix psacct rdisc saslauthd)
 for service in "${off[@]}"
