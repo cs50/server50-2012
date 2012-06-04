@@ -1,4 +1,3 @@
-#bootloader --append="biosdevname=0 quiet rhgb selinux=0" --driveorder=sda --location=mbr
 bootloader --append="selinux=0" --timeout=1
 keyboard us
 lang en_US.UTF-8
@@ -21,30 +20,11 @@ part <%= root %> --size <%= (partition['size'].to_f * 1024).to_i %> --fstype <%=
 
 %packages
 
-#-fedora-logos
-#-fedora-release*
-#generic-logos
-#generic-release
-
 <% appliance_config.packages.each do |package| %>
   <%= package %>
 <% end %>
 
 %end
 
-#%post --nochroot
-#cp /etc/resolv.conf /mnt/sysimage/etc/
-#%end
-
 %post
-
-#/usr/bin/yum -y reinstall server50
-#/usr/bin/yum -y install http://prdownloads.sourceforge.net/webadmin/webmin-1.580-1.noarch.rpm
-
-# fails to install during kickstart because /etc/centos-release isn't yet in place
-#/usr/bin/yum --nogpg -y install http://prdownloads.sourceforge.net/webadmin/webmin-1.580-1.noarch.rpm > /tmp/SAVE2 2>&1
-
-# unneeded
-#/usr/bin/yum -y remove abrt at audit cpuspeed hal kexec-tools lvm2 mdadm quota readahead rng-tools smartmontools sysstat
-
 %end
