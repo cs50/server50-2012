@@ -27,10 +27,9 @@ repos:
     baseurl: "file:///DVD"
     ephemeral: true
     #mirrorlist: "http://mirrorlist.centos.org/?arch=x86_64&release=6.2&repo=os"
-# TODO: re-enable updates
-#  - name: "updates"
-#    mirrorlist: "http://mirrorlist.centos.org/?arch=x86_64&release=6.2&repo=updates"
-#    ephemeral: true
+  - name: "updates"
+    mirrorlist: "http://mirrorlist.centos.org/?arch=x86_64&release=6.2&repo=updates"
+    ephemeral: true
   - name: "server50"
     baseurl: "http://mirror.cs50.net/server50/6/RPMS/"
     ephemeral: true
@@ -52,9 +51,11 @@ repos:
   - name: "nodejs"
     baseurl: "http://nodejs.tchol.org/stable/el6/x86_64/"
     ephemeral: true
-  - name: "vmware-tools"
-    baseurl: "http://packages.vmware.com/tools/esx/latest/rhel6/x86_64/"
-    ephemeral: true
+
+# unused for now
+#  - name: "vmware-tools"
+#    baseurl: "http://packages.vmware.com/tools/esx/latest/rhel6/x86_64/"
+#    ephemeral: true
 
 packages:
   - @core
@@ -66,11 +67,24 @@ post:
       # lock root
       /usr/bin/passwd -l root
  
-      # TEMP (works)
-      #/usr/bin/yum --nogpg -y install vmware-tools-esx-kmods vmware-tools-esx-nox
+      # /srv/www
+      /bin/mkdir /srv/www
+      /bin/chown apache:apache /srv/www
+      /bin/chmod 0771 /srv/www
+
+      # /etc/httpd/conf.d/vhosts.conf
+      /bin/echo "<VirtualHost *:80>" > /etc/httpd/conf.d/vhosts.conf
+      /bin/echo >> /etc/httpd/conf.d/vhosts.conf
+      /bin/echo "# DocumentRoot /path/to/webroot" >> /etc/httpd/conf.d/vhosts.conf
+      /bin/echo "# ServerName www.example.com" >> /etc/httpd/conf.d/vhosts.conf
+      /bin/echo >> /etc/httpd/conf.d/vhosts.conf
+      /bin/echo "</VirtualHost>" >> /etc/httpd/conf.d/vhosts.conf
+
+      # unused for now
+      # /usr/bin/yum --nogpg -y install vmware-tools-esx-kmods vmware-tools-esx-nox
 
       # reinstall to ensure its files overwrite other RPMs'
-      /usr/bin/yum --nogpg -y reinstall server50
+      LIBGUESTFS_MEMSIZE=768 /usr/bin/yum --nogpg -y reinstall server50
 
       # avoids "according to mtab, /sys is already mounted on /sys" on boot
       /bin/rm -f /etc/mtab
