@@ -1,4 +1,5 @@
-# VMware: boxgrinder-build server50-1-0.appl -p vmware --platform-config type:personal,thin_disk:true --debug
+# VMware: ./boxgrinder-build server50-1-0.appl -p vmware --platform-config type:personal,thin_disk:true --debug
+# VirtualBox (because OVF requires streamOptimized): ./boxgrinder-build -p multidisk server50-6-0.appl -l multidisk-boxgrinder-plugin --debug --trace
 
 name: server50
 summary: This is CS50 Server.
