@@ -1,3 +1,5 @@
+boxgrinder/build/
+boxgrinder/log/
 rpmbuild/BUILD/
 rpmbuild/BUILDROOT/
 rpmbuild/RPMS/
